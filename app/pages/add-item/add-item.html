@@ -1,0 +1,23 @@
+<ion-navbar *navbar>
+  <ion-title>
+    Add item
+  </ion-title>
+ <ion-buttons end>
+  <button (click)="saveItem()">
+    <ion-icon name="checkmark"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content>
+  <ion-list>
+    <ion-input stacked-label>
+      <ion-label>Title</ion-label>
+      <input type="text" [(ngModel)]="newItem.title">
+    </ion-input>
+    <ion-input stacked-label>
+      <ion-label>Description</ion-label>
+      <textarea [(ngModel)]="newItem.description"></textarea>
+    </ion-input>
+  </ion-list>
+</ion-content>

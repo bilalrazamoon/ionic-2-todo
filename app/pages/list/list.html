@@ -1,0 +1,29 @@
+<ion-navbar *navbar hide-back-button>
+  <ion-title>
+    Todos
+  </ion-title>
+  <ion-buttons end>
+    <button (click)="addItem()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-buttons>
+</ion-navbar>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="#item of items" #slidingItem>
+        <button ion-item (click)="viewItem(item)">
+          <h3>{{item.title}}</h3>
+          <p>{{item.description}}</p>
+        </button>
+        <ion-item-options>
+          <button light (click)="editItem(slidingItem,item,list)">
+            <ion-icon name="create"></ion-icon> Edit
+          </button>
+          <button danger (click)="deleteItem(slidingItem, item)">
+            <ion-icon name="trash"></ion-icon> Delete
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+</ion-list>
+</ion-content>

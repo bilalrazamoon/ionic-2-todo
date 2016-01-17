@@ -1,11 +1,4 @@
 {
-  "name": "tabsMigration",
-  "app_id": "",
-  "browsers": [
-    {
-      "platform": "android",
-      "browser": "crosswalk",
-      "version": "12.41.296.5"
-    }
-  ]
+  "name": "ionic-2-todo",
+  "app_id": ""
 }

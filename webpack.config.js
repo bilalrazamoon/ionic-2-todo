@@ -1,52 +1,49 @@
 var path = require('path');
-var wwwPath = path.resolve(__dirname, 'www');
-var outputPath = path.join(wwwPath, 'build', 'js');
-var appPath = path.join(wwwPath, 'app');
-var appJsPath = path.join(appPath, 'app.js');
+
 
 module.exports = {
   entry: [
-    "es6-shim",
-    "zone.js",
-    "reflect-metadata",
-    "web-animations.min",
-    // "./www/app/app.js"
-    appJsPath
+    path.normalize('es6-shim/es6-shim.min'),
+    'reflect-metadata',
+    'web-animations.min',
+    path.normalize('zone.js/dist/zone-microtask'),
+    path.resolve('app/app')
   ],
   output: {
-    path: outputPath,
-    filename: 'app.bundle.js'
-    //pathinfo: true // show module paths in the bundle, handy for debugging
+    path: path.resolve('www/build/js'),
+    filename: 'app.bundle.js',
+    pathinfo: false // show module paths in the bundle, handy for debugging
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loader: "awesome-typescript-loader?doTypeCheck=false&useWebpackText=true",
-        include: [wwwPath],
-        // include: /www(\/|\\)app(\/|\\)/,
+        loader: 'awesome-typescript',
+        query: {
+          doTypeCheck: false,
+          useWebpackText: true
+        },
+        include: path.resolve('app'),
         exclude: /node_modules/
       },
       {
-        test: /\.ts$/,
-        loader: "awesome-typescript-loader",
-        // include: /www(\/|\\)app(\/|\\)/,
-        include: [wwwPath],
-        exclude: /node_modules/
-       }
+        test: /\.js$/,
+        include: path.resolve('node_modules/angular2'),
+        loader: 'strip-sourcemap'
+      }
+    ],
+    noParse: [
+      /es6-shim/,
+      /reflect-metadata/,
+      /web-animations/,
+      /zone\.js(\/|\\)dist(\/|\\)zone-microtask/
     ]
   },
   resolve: {
-    modulesDirectories: [
-      "node_modules",
-      "node_modules/ionic-framework/node_modules", // angular is a dependency of ionic
-      "node_modules/ionic-framework/dist/src/es5/common", // ionic-framework npm package (stable)
-      "node_modules/ionic-framework/dist/js", // for web-animations polyfill
-
-      // See README for steps on developing against ionic-framework locally
-      // "dist/src/es5/common" // when developing against locally linked ionic-framework (master)
-    ],
-    extensions: ["", ".js", ".ts"]
+    alias: {
+      'ionic': 'ionic-framework',
+      'web-animations.min': path.normalize('ionic-framework/js/web-animations.min')
+    },
+    extensions: ['', '.js']
   }
 };
-
